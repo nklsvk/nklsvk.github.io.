@@ -2168,7 +2168,28 @@ At the heart of my work is a simple goal: to help shape technology that makes li
         behavior: 'smooth'
       });
     });
+// CV Modal
+const cvBtn = document.querySelector('.cv-btn');
+const cvModal = document.querySelector('.cv-modal');
 
+cvBtn.addEventListener('click', () => {
+  cvModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+});
+
+// Close CV modal when clicking the close button
+document.querySelector('.cv-modal .modal-close').addEventListener('click', () => {
+  cvModal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+
+// Close CV modal when clicking outside
+cvModal.addEventListener('click', (e) => {
+  if (e.target === cvModal) {
+    cvModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
     // Form submission
 const contactForm = document.querySelector('.contact-form');
 const successMessage = document.createElement('div');
