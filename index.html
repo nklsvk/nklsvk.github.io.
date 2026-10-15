@@ -1,2358 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nikolas Vaki – UX Portfolio</title>
-  <link rel="icon" type="image/png" href="Photos/NV LOGO.png">
-
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #00f0ff;
-      --primary-dark: #00a8b5;
-      --secondary: #ff2d75;
-      --tertiary: #7928ca;
-      --dark: #0a0a0a;
-      --darker: #050505;
-      --light: #f0f0f0;
-      --gray: #888;
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 16px;
-      --radius-xl: 32px;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
-      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 100px;
-    }
-
-    ::selection {
-      background: var(--primary);
-      color: var(--dark);
-    }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background-color: var(--darker);
-      color: var(--light);
-      line-height: 1.6;
-      overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 25% 25%, rgba(0, 240, 255, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255, 45, 117, 0.05) 0%, transparent 50%);
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--dark);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 4px;
-    }
-
-    /* Typography */
-    h1, h2, h3, h4 {
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    p {
-      margin-bottom: 1.5rem;
-      color: var(--gray);
-    }
-
-    /* Layout */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    section {
-      position: relative;
-      padding: 8rem 0;
-      overflow: hidden;
-    }
-
-    /* CV Button */
-    .cv-btn {
-      position: fixed;
-      bottom: 2rem;
-      left: 2rem;
-      background: var(--primary);
-      color: var(--dark);
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: var(--transition);
-      z-index: 99;
-      box-shadow: var(--shadow-md);
-    }
-
-    .cv-btn:hover {
-      background: var(--secondary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      min-height: 800px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%);
-      z-index: -1;
-      animation: pulse 15s infinite alternate;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 6rem);
-      margin-bottom: 1.5rem;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      margin-bottom: 2rem;
-      max-width: 600px;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-
-    .hero-scroll::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 60px;
-      background: var(--gray);
-      animation: scrollPrompt 2s infinite;
-    }
-
-    /* Floating Navigation */
-    nav {
-      position: fixed;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 50px;
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      gap: 1.5rem;
-      z-index: 100;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-    }
-
-    nav:hover {
-      box-shadow: 0 0 0 1px var(--primary), var(--shadow-lg);
-    }
-
-    nav a {
-      font-size: 0.9rem;
-      font-weight: 500;
-      position: relative;
-      color: var(--gray);
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: var(--transition);
-    }
-
-    nav a:hover {
-      color: var(--light);
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    nav a.active {
-      color: var(--primary);
-    }
-
-    nav a.active::after {
-      width: 100%;
-    }
-
-    /* Section Headings */
-    .section-heading {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      white-space: nowrap;
-    }
-
-    .section-heading::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--primary), transparent);
-    }
-
-    /* About Section */
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-image {
-      position: relative;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      aspect-ratio: 1/1;
-    }
-
-    .about-image::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--primary), var(--tertiary));
-      opacity: 0.3;
-      mix-blend-mode: overlay;
-    }
-
-    .about-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .about-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .about-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .skill {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .skill:hover {
-      background: var(--primary);
-      color: var(--dark);
-      transform: translateY(-2px);
-    }
-
-    /* Experience Section */
-    .experience-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--glass-border);
-    }
-
-    .experience-date {
-      color: var(--primary);
-      font-weight: 500;
-    }
-
-    .experience-content h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .experience-company {
-      color: var(--primary);
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    .experience-description {
-      margin-bottom: 1rem;
-    }
-
-    .experience-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .experience-tag {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      padding: 0.25rem 0.75rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-    }
-
-    /* Education Section */
-    .education-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--glass-border);
-    }
-
-    .education-date {
-      color: var(--primary);
-      font-weight: 500;
-    }
-
-    .education-content h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .education-institution {
-      color: var(--primary);
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    /* Projects Section */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-      gap: 2rem;
-    }
-
-    .project-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: var(--transition);
-      position: relative;
-      height: 400px;
-      cursor: pointer;
-    }
-
-    .project-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
-      border-color: var(--primary);
-    }
-
-    .project-image {
-      height: 200px;
-      width: 100%;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-
-    .project-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    }
-
-    .project-card:nth-child(1) .project-image {
-      background-image: url('Photos/festiffy.png');
-    }
-
-    .project-card:nth-child(2) .project-image {
-      background-image: url('Photos/webwiselogo.jpg')}
-
-    .project-card:nth-child(3) .project-image {
-      background-image: url('Photos/skoupa2.jpg');
-    }
-   .project-card:nth-child(4) .project-image {
-      background-image: url('Photos/petopialogo.jpg');
-    }
-
-    .project-content {
-      padding: 1.5rem;
-      height: calc(100% - 200px);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-title {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-description {
-      margin-bottom: 1rem;
-      flex: 1;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .project-tag {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      padding: 0.25rem 0.75rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-    }
-
-    /* Project Modal */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-    }
-
-    .modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-content {
-      background: var(--dark);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      width: 90%;
-      max-width: 1000px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 2rem;
-      position: relative;
-      transform: translateY(20px);
-      transition: var(--transition);
-    }
-
-    .modal.active .modal-content {
-      transform: translateY(0);
-    }
-
-
-
-/*  DFD  */
-
- .modal-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.modal-image {
-  flex: 1 1 300px;
-  max-width: 100%;
-}
-
-.modal-image img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.modal-video .video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; 
-  height: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.modal-video iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 8px;
-}
- 
-
-
-/*  DFD  */
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 40px;
-      height: 40px;
-      background: var(--secondary) !important;
-      border: none !important;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-      color: var(--light);
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    .modal-close:hover {
-      background: var(--primary) !important;
-      color: var(--dark) !important;
-    }
-
-    .modal-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .modal-image {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      height: 200px;
-    }
-
-    .modal-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* CV Modal */
-    .cv-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-    }
-
-    .cv-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .cv-modal-content {
-      background: var(--dark);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      width: 90%;
-      max-width: 900px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 2rem;
-      position: relative;
-      transform: translateY(20px);
-      transition: var(--transition);
-    }
-
-    .cv-modal.active .cv-modal-content {
-      transform: translateY(0);
-    }
-
-    .cv-viewer {
-      background: white;
-      color: var(--dark);
-      padding: 2rem;
-      border-radius: var(--radius-md);
-      margin-top: 1.5rem;
-      max-height: 70vh;
-      overflow-y: auto;
-    }
-
-    .cv-page {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .cv-page h3 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-
-    .cv-page h4 {
-      font-size: 1.3rem;
-      margin: 1.5rem 0 1rem;
-      color: var(--secondary);
-      border-bottom: 1px solid #eee;
-      padding-bottom: 0.5rem;
-    }
-
-    /* Contact Section */
-    .contact {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .contact-method {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      color: var(--primary);
-      transition: var(--transition);
-    }
-
-    .contact-method:hover .contact-icon {
-      background: var(--primary);
-      color: var(--dark);
-      transform: rotate(10deg);
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .form-group label {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      color: var(--light);
-      font-family: inherit;
-      transition: var(--transition);
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
-    }
-
-    .form-group textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .submit-btn {
-      background: var(--primary);
-      color: var(--dark);
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      transition: var(--transition);
-      align-self: flex-start;
-    }
-
-    .submit-btn:hover {
-      background: var(--secondary);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 45, 117, 0.3);
-    }
-
-    /* Footer */
-    footer {
-      padding: 4rem 0;
-      text-align: center;
-      border-top: 1px solid var(--glass-border);
-    }
-
-    .footer-socials {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-social {
-      width: 50px;
-      height: 50px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      transition: var(--transition);
-    }
-
-    .footer-social:hover {
-      background: var(--primary);
-      color: var(--dark);
-      transform: translateY(-5px);
-    }
-
-    .footer-copyright {
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-
-    /* Back to top button */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-      z-index: 99;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .back-to-top:hover {
-      background: var(--primary);
-      color: var(--dark);
-    }
-
-    /* Expanded image styles */
-.image-viewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transition);
-}
-
-.image-viewer.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.expanded-image {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-  transform: scale(0.9);
-  transition: var(--transition);
-}
-
-.image-viewer.active .expanded-image {
-  transform: scale(1);
-}
-
-.nav-arrows {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 2rem;
-  z-index: 1;
-}
-
-.arrow {
-  width: 50px;
-  height: 50px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.arrow:hover {
-  background: var(--primary);
-  color: var(--dark);
-}
-
-.close-viewer {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.close-viewer:hover {
-  background: var(--primary);
-  color: var(--dark);
-}
-
-.modal-image img {
-  cursor: zoom-in;
-  transition: transform 0.3s ease;
-}
-
-.modal-image img:hover {
-  transform: scale(1.03);
-}
-
-/* CV Viewer Styling */
-.cv-viewer {
-  background: white;
-  color: #333;
-  padding: 2rem;
-  border-radius: var(--radius-md);
-  margin-top: 1.5rem;
-  max-height: 70vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-sm);
-}
-
-.cv-page {
-  font-family: 'Space Grotesk', sans-serif;
-  line-height: 1.6;
-}
-
-.cv-page h3 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary);
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 0.5rem;
-}
-
-.cv-page h4 {
-  font-size: 1.3rem;
-  margin: 1.5rem 0 1rem;
-  color: var(--secondary);
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid #eee;
-}
-
-.cv-page ul {
-  margin-bottom: 1.5rem;
-  padding-left: 1.2rem;
-}
-
-.cv-page ul ul {
-  margin-bottom: 0.5rem;
-  padding-left: 1.5rem;
-}
-
-.cv-page li {
-  margin-bottom: 0.5rem;
-  position: relative;
-  list-style-type: none;
-}
-
-.cv-page li:before {
-  content: "•";
-  color: var(--primary);
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
-
-.cv-page strong {
-  color: #222;
-  font-weight: 700;
-}
-
-.cv-page em {
-  color: #666;
-  font-style: normal;
-  font-size: 0.9em;
-  display: block;
-  margin: 0.3rem 0 0.5rem;
-}
-
-.cv-page p {
-  margin-bottom: 1rem;
-  color: #444;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .cv-viewer {
-    padding: 1.5rem;
-  }
-  
-  .cv-page h3 {
-    font-size: 1.5rem;
-  }
-  
-  .cv-page h4 {
-    font-size: 1.2rem;
-  }
-}
-/* Skills Grid */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.skills-grid ul {
-  padding-left: 0;
-}
-
-.skills-grid li:first-child {
-  font-weight: 700;
-  color: var(--tertiary);
-  margin-bottom: 0.5rem;
-  list-style: none;
-}
-
-.skills-grid li:first-child:before {
-  content: none;
-}
-/* Improved Modal Content Styling */
-.modal-content {
-  max-width: 900px; /* Slightly wider for better text flow */
-}
-
-.modal-content h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary);
-  line-height: 1.2;
-}
-
-.modal-content p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-  color: var(--gray);
-}
-
-.modal-content h3 {
-  font-size: 1.6rem;
-  margin: 2.5rem 0 1.5rem;
-  color: var(--secondary);
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.modal-content ul {
-  margin-bottom: 2rem;
-  padding-left: 1.5rem;
-}
-
-.modal-content li {
-  margin-bottom: 0.8rem;
-  line-height: 1.6;
-  position: relative;
-  list-style-type: none;
-}
-
-.modal-content li:before {
-  content: "•";
-  color: var(--primary);
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
-
-.modal-content strong {
-  color: var(--light);
-  font-weight: 600;
-}
-
-/* Gallery Improvements */
-.modal-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.2rem;
-  margin: 2.5rem 0;
-}
-
-.modal-image {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  height: 200px;
-  transition: transform 0.3s ease;
-}
-
-.modal-image:hover {
-  transform: translateY(-3px);
-}
-
-.modal-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  cursor: zoom-in;
-}
-
-/* Video Embed Styling */
-.modal-video {
-  grid-column: 1 / -1;
-  height: auto;
-}
-
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-md);
-}
-/* Project Section Styling */
-.project-section {
-  margin-bottom: 2.5rem;
-}
-
-.project-intro {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: var(--light);
-  margin-bottom: 2rem;
-}
-
-.feature-list li {
-  background: var(--glass);
-  border-left: 3px solid var(--primary);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  transition: var(--transition);
-}
-
-.feature-list li:hover {
-  background: rgba(0, 240, 255, 0.1);
-  transform: translateX(5px);
-}
-
-.feature-list strong {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--primary);
-}
-
-.highlight-box {
-  background: rgba(0, 240, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  padding: 1.2rem;
-  border-radius: var(--radius-sm);
-  margin: 1.5rem 0;
-}
-
-/* For modals with many images */
-.modal-gallery {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-/* Custom scrollbar for gallery */
-.modal-gallery::-webkit-scrollbar {
-  width: 6px;
-}
-
-.modal-gallery::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 3px;
-}
-
-.form-success {
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  text-align: center;
-  margin-top: 1rem;
-  animation: fadeIn 0.5s ease;
-}
-
-.form-success i {
-  font-size: 3rem;
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.form-success p {
-  color: var(--light);
-  font-size: 1.2rem;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .modal-content {
-    padding: 1.5rem;
-  }
-  
-  .modal-content h2 {
-    font-size: 1.8rem;
-  }
-  
-  .modal-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-}
-    /* Animations */
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 0.1;
-      }
-      50% {
-        opacity: 0.2;
-      }
-      100% {
-        transform: scale(1.2);
-        opacity: 0.1;
-      }
-    }
-
-    @keyframes scrollPrompt {
-      0%, 100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      50% {
-        transform: translateY(10px);
-        opacity: 0.5;
-      }
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .about,
-      .contact {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-item,
-      .education-item {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      }
-
-      .cv-modal-content {
-        width: 95%;
-      }
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        padding: 0.5rem 1rem;
-        gap: 1rem;
-        top: 1rem;
-      }
-
-      nav a {
-        font-size: 0.8rem;
-      }
-
-      .hero-title {
-        font-size: clamp(2.5rem, 8vw, 4rem);
-      }
-
-      .section-heading {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
-
-      .section-heading::after {
-        display: none;
-      }
-
-      .cv-btn {
-        bottom: 1rem;
-        left: 1rem;
-        padding: 0.75rem 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      section {
-        padding: 5rem 0;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card {
-        height: auto;
-      }
-
-      .project-image {
-        height: 150px;
-      }
-
-      .cv-viewer {
-        height: 60vh;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nikolas Vaki | Computer Science and Human Computer Interaction</title>
+<meta name="description" content="Nikolas Vaki. BSc Computer Science and MSc Human Computer Interaction. Software engineering, web development, data analysis and mixed methods research. Based in Utrecht, Netherlands.">
+<meta property="og:title" content="Nikolas Vaki | Computer Science and Human Computer Interaction">
+<meta property="og:description" content="I build software, and I check that people can actually use it.">
+<link rel="icon" type="image/png" href="Photos/NVnewLogo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f7f8fa;--card:#fff;--ink:#0e1520;--ink2:#394352;--muted:#5d6878;--line:#dfe3ea;--navy:#0f4f4a;--blue:#0f766e;--soft:#e6f3f1;--r:12px;
+--head:"Schibsted Grotesk",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif}
+[data-theme=dark]{--paper:#0c1118;--card:#131a24;--ink:#eef2f8;--ink2:#c3cbd7;--muted:#97a3b4;--line:#243040;--navy:#7fe3d4;--blue:#5fd4c4;--soft:#12302d}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink2);font:16px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--head);color:var(--ink);line-height:1.1;letter-spacing:-.02em}
+p+p{margin-top:.9rem}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
+section{padding:clamp(56px,8vw,100px) 0}
+h2{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:12px}
+.lede{color:var(--muted);max-width:60ch;margin-bottom:30px}
+.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;z-index:99}.skip:focus{top:12px}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;min-height:64px}
+.logo{font:700 1rem var(--head);color:var(--ink);display:flex;align-items:center;gap:10px}
+.logo b{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--navy);color:var(--paper);font-size:.74rem}
+nav{margin-left:auto;display:flex;gap:2px}
+nav a{padding:8px 12px;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--muted)}
+nav a:hover{background:var(--soft);color:var(--ink)}
+.tools{display:flex;gap:8px}
+.ib{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:10px;font-weight:600;font-size:.92rem;border:1px solid transparent;transition:background .2s,border-color .2s}
+.btn.p{background:var(--blue);color:#fff}.btn.p:hover{background:var(--ink)}[data-theme=dark] .btn.p{color:#06201d}
+.btn.g{border-color:var(--line);color:var(--ink);background:var(--card)}.btn.g:hover{border-color:var(--ink)}
+@media(max-width:780px){.bar{flex-wrap:wrap;padding-top:10px}nav{order:3;width:100%;margin:0;padding-bottom:10px;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap;border:1px solid var(--line);background:var(--card);min-height:44px;display:flex;align-items:center}.tools{margin-left:auto}html{scroll-padding-top:120px}}
+
+/* hero with departure board */
+.hero{padding:clamp(40px,7vw,88px) 0 clamp(40px,6vw,72px)}
+.hg{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px);align-items:center}
+h1{font-size:clamp(2.7rem,7vw,4.8rem);font-weight:800;letter-spacing:-.04em;margin-bottom:18px}
+.intro{font:600 clamp(1.25rem,2.4vw,1.7rem)/1.3 var(--head);color:var(--ink);letter-spacing:-.015em;max-width:24ch}
+.sub{margin-top:16px;max-width:52ch;color:var(--muted)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:26px;font-size:.88rem;color:var(--muted)}
+.facts span{display:flex;align-items:center;gap:8px}.facts i{width:7px;height:7px;border-radius:50%;background:#16a34a}
+.board{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,28px)}
+.board h2{font-size:1.05rem;margin:0 0 4px}
+.row{padding:2px 0 2px 16px;border-left:3px solid var(--blue);margin-top:18px}
+.row b{display:block;font:600 1rem var(--head);color:var(--ink)}.row span{font-size:.88rem;color:var(--muted)}
+@media(max-width:860px){.hg{grid-template-columns:1fr}.intro{max-width:none}}
+
+/* proof */
+.proof{background:var(--card);border-block:1px solid var(--line);padding:0}
+.pg{display:grid;grid-template-columns:repeat(4,1fr)}
+.pg div{padding:24px clamp(14px,2.5vw,26px);border-left:1px solid var(--line)}.pg div:first-child{border:0}
+.pg b{display:block;font:700 clamp(1.5rem,2.8vw,2.1rem) var(--head);color:var(--ink);letter-spacing:-.02em}.pg span{font-size:.85rem;color:var(--muted);line-height:1.4;display:block;margin-top:2px}
+@media(max-width:720px){.pg{grid-template-columns:1fr 1fr}.pg div:nth-child(3){border-left:0}.pg div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* about + skills */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px)}
+.skills{display:grid;gap:18px}
+.skills h3{font-size:.95rem;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-size:.82rem;background:var(--card);border:1px solid var(--line);padding:4px 11px;border-radius:99px;color:var(--ink2)}
+.skills .eng span{background:var(--soft);border-color:transparent;color:var(--navy);font-weight:500}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+
+/* projects */
+.filters{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.filters button{flex:none;min-height:42px;padding:0 16px;border:1px solid var(--line);border-radius:99px;font-size:.88rem;font-weight:500;color:var(--muted);background:var(--card)}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:940px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--blue)}.card[hidden]{display:none}
+.cover{height:150px;background:var(--soft) var(--img) center/cover no-repeat;border-bottom:1px solid var(--line)}
+.cb{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cb small{color:var(--blue);font-weight:600;font-size:.8rem}.cb h3{font-size:1.08rem}.cb p{font-size:.9rem;color:var(--muted);margin:0;flex:1}
+.stack{font-size:.8rem;color:var(--ink2)}
+.links{display:flex;gap:14px;margin-top:4px}.links a{font-weight:600;font-size:.88rem;color:var(--blue);padding:4px 0;border-bottom:1px solid transparent}.links a:hover{border-color:var(--blue)}
+.feat{grid-column:1/-1;flex-direction:row}.feat .cover{width:42%;height:auto;min-height:220px;border:0;border-right:1px solid var(--line)}
+@media(max-width:700px){.feat{flex-direction:column}.feat .cover{width:100%;height:160px;border-right:0;border-bottom:1px solid var(--line)}}
+
+/* thesis */
+.thesis{background:var(--card);border-block:1px solid var(--line)}
+.num{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+.num div{background:var(--soft);border-radius:var(--r);padding:20px}.num b{font:700 2rem var(--head);color:var(--navy)}.num span{display:block;font-size:.86rem;color:var(--muted);margin-top:4px}
+.bars{display:grid;gap:9px;max-width:560px}.br{display:grid;grid-template-columns:56px 1fr 52px;gap:10px;align-items:center;font-size:.85rem}
+.br i{display:block;height:24px;border-radius:5px;background:var(--blue)}.br span:first-child{text-align:right;color:var(--muted)}.br span:last-child{font-weight:600;color:var(--ink)}
+@media(max-width:640px){.num{grid-template-columns:1fr}}
+
+/* timeline */
+.tl{display:grid;gap:0}.ent{display:grid;grid-template-columns:170px 1fr;gap:clamp(14px,4vw,44px);padding:24px 0;border-top:1px solid var(--line)}.ent:first-child{border:0}
+.ent time{font-size:.85rem;color:var(--muted);padding-top:3px}.ent h3{font-size:1.08rem;margin-bottom:2px}.ent em{font-style:normal;color:var(--blue);font-weight:500;font-size:.92rem;display:block;margin-bottom:8px}
+.ent ul{list-style:none;display:grid;gap:5px}.ent li{padding-left:16px;position:relative;font-size:.93rem;color:var(--muted)}.ent li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:2px;background:var(--blue)}
+h3.sub2{margin:44px 0 6px;font-size:1.3rem}
+@media(max-width:700px){.ent{grid-template-columns:1fr;gap:4px}}
+
+/* contact */
+.field{display:grid;gap:6px;margin-bottom:14px}.field label{font-size:.85rem;font-weight:600;color:var(--ink)}
+.field input,.field textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:100%}
+.field textarea{min-height:130px;resize:vertical}.field input:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--soft)}
+.err{color:#b3261e;font-size:.82rem;min-height:1em}[data-theme=dark] .err{color:#ff8a80}
+.ch{display:grid;gap:0;margin-top:22px}.ch a{padding:13px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-weight:500;color:var(--ink)}.ch a span{color:var(--muted);font-weight:400}.ch a:hover{color:var(--blue)}
+.ok{display:none;background:var(--soft);border-radius:var(--r);padding:22px}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:.85rem;color:var(--muted)}footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
 </head>
 <body>
-  <!-- CV Button -->
-  <button class="cv-btn">
-    <i class="fas fa-file-alt"></i> View CV
-  </button>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap bar">
+  <a class="logo" href="#top"><b>NV</b>Nikolas Vaki</a>
+  <nav aria-label="Sections"><a href="#work">Projects</a><a href="#about">Skills</a><a href="#thesis">Thesis</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+  <div class="tools"><button class="ib" id="theme" aria-label="Switch to dark theme" aria-pressed="false"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button></div>
+</div></header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1 class="hero-title">Nikolas Vaki</h1>
-        <p class="hero-subtitle">HCI Master's Student | Computer Science Graduate</p>
-        <div class="about-skills">
-          <span class="skill">User Research</span>
-          <span class="skill">Interaction Design</span>
-          <span class="skill">Prototyping</span>
-          <span class="skill">Accessibility</span>
-        </div>
-      </div>
-      <div class="hero-scroll">Scroll to explore</div>
-    </div>
-  </section>
+<main id="main">
+<section class="hero" id="top"><div class="wrap hg">
+  <div>
+    <h1>Nikolas Vaki</h1>
+    <p class="intro">I build software, and I check that people can actually use it.</p>
+    <p class="sub">BSc Computer Science and MSc Human Computer Interaction. I write code first, and bring data analysis, research and product thinking to it. Based in Utrecht, open to roles across the Netherlands and remote.</p>
+    <div class="cta"><a class="btn p" href="#work">See my projects</a><a class="btn g" href="mailto:nikolasvk@outlook.com">Email me</a><a class="btn g" href="https://github.com/nklsvk" target="_blank" rel="noopener">GitHub</a></div>
+    <div class="facts"><span><i></i>Looking for a first software engineering role</span><span>EU citizen</span><span>Greek, English</span></div>
+  </div>
+  <aside class="board" aria-label="Selected projects">
+    <h2>Selected projects</h2>
+    <div class="row"><b>Passenger choice pipeline</b> <span>Python, statsmodels. 9,108 choices analysed for NS</span></div>
+    <div class="row"><b>WebWise Academy</b> <span>JavaScript, Moodle, H5P, OpenAI API</span></div>
+    <div class="row"><b>Security camera app</b> <span>Python, OpenCV, PyQt5</span></div>
+  </aside>
+</div></section>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#about" class="active">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#education">Education</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<section class="proof" aria-label="Key facts"><div class="wrap pg">
+  <div><b>Scrum</b> <span>Test engineer in an agile team at Bank of Cyprus</span></div>
+  <div><b>6</b> <span>Languages of course material coordinated for an EU project</span></div>
+  <div><b>9,108</b> <span>Choices modelled in Python for my master thesis with NS</span></div>
+  <div><b>759</b> <span>Respondents in the experiment I designed and ran</span></div>
+</div></section>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <div class="section-heading">
-        <h2>About Me</h2>
-      </div>
-      <div class="about">
-        <div class="about-image">
-          <!-- <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Nikolas Vaki"> -->
-                 <img src="Photos/NV LOGO.png" alt="Nikolas Vaki">
+<section id="work"><div class="wrap">
+  <h2>Projects</h2>
+  <p class="lede">Engineering and data work first, then research and design. Filter by what you are hiring for.</p>
+  <div class="filters" role="group" aria-label="Filter projects">
+    <button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="eng">Engineering</button><button aria-pressed="false" data-f="ai">AI and data</button><button aria-pressed="false" data-f="research">Research</button><button aria-pressed="false" data-f="design">Design</button>
+  </div>
+  <div class="grid" id="grid">
+    <article class="card feat" data-t="eng design"><div class="cover" style="--img:url('Photos/webwiselogo.jpg')"></div><div class="cb">
+      <small>Bachelor thesis, sole developer</small><h3>WebWise Academy</h3>
+      <p>A Moodle learning platform that teaches developers to build websites people with visual impairments can use. It includes three linked courses, H5P exercises, a colour blindness simulator, a contrast checker and an OpenAI integration that answers accessibility questions. Supervisors and pilot users from a developer community evaluated it positively, and the simulator was named the most useful part.</p>
+      <p class="stack">JavaScript, Moodle, H5P, OpenAI API</p>
+      <div class="links"><a href="https://www.youtube.com/watch?v=mAABKbpL4Qc" target="_blank" rel="noopener">Watch the demo</a></div></div></article>
+    <article class="card" data-t="eng ai"><div class="cover" style="--img:url('Photos/securitycameracover.png')"></div><div class="cb">
+      <small>Computer vision</small><h3>Security camera app</h3>
+      <p>A desktop app that watches live or recorded video, highlights moving objects, saves snapshots, plays an alarm and sends email alerts.</p>
+      <p class="stack">Python, OpenCV, PyQt5</p>
+      <div class="links"><a href="https://github.com/nklsvk/Security-Camera" target="_blank" rel="noopener">View code</a></div></div></article>
+    <article class="card" data-t="ai research"><div class="cover" style="--img:url('Photos/worththewaitfinal.jpg')"></div><div class="cb">
+      <small>Master thesis with NS</small><h3>Worth the wait</h3>
+      <p>Mixed methods study of how long passengers will wait for a quieter train. I built the full analysis pipeline in Python and turned the results into design rules for the journey planner.</p>
+      <p class="stack">Python, pandas, statsmodels, Qualtrics, NVivo</p>
+      <div class="links"><a href="#thesis">Results</a><a href="https://studenttheses.uu.nl/items/28509b88-c971-454e-b42f-cb1fce4faeba" target="_blank" rel="noopener">Read thesis</a></div></div></article>
+    <article class="card" data-t="ai"><div class="cover" style="--img:url('Photos/bengaluru.jpg')"></div><div class="cb">
+      <small>Machine learning</small><h3>House price prediction</h3>
+      <p>Regression models on Bengaluru housing data, from cleaning and feature engineering to tuning. Best score 0.86.</p>
+      <p class="stack">Python, pandas, scikit-learn</p>
+      <div class="links"><a href="https://github.com/nklsvk/Bengaluru-House-Price-Prediction-Model-" target="_blank" rel="noopener">View code</a></div></div></article>
+    <article class="card" data-t="ai eng"><div class="cover" style="--img:url('Photos/foodadvisor.png')"></div><div class="cb">
+      <small>Symbolic AI</small><h3>Context aware food advisor</h3>
+      <p>A rule based reasoner that decides whether to cook, order or eat out from ingredients, weather and guests, and can explain every recommendation.</p>
+      <p class="stack">Prolog</p>
+      <div class="links"><a href="https://github.com/nklsvk/Cognitive-assistant-to-decide-where-to-eat-" target="_blank" rel="noopener">View code</a></div></div></article>
+    <article class="card" data-t="design research"><div class="cover" style="--img:url('Photos/skoupa2.jpg')"></div><div class="cb">
+      <small>Tangible interaction</small><h3>Skoupa meditation lamp</h3>
+      <p>A voice driven lamp for winding down before sleep. I led the diary studies and paper prototype sessions that shaped the build.</p></div></article>
+    <article class="card" data-t="design research"><div class="cover" style="--img:url('Photos/festiffy.png')"></div><div class="cb">
+      <small>Product design</small><h3>Festify</h3>
+      <p>Event discovery app where onboarding earns the right to ask for preferences. I led the research and owned onboarding and filtering.</p></div></article>
+    <article class="card" data-t="design"><div class="cover" style="--img:url('Photos/petopialogo.jpg')"></div><div class="cb">
+      <small>Mobile design</small><h3>Petopia</h3>
+      <p>Social platform for pet owners with a lost and found flow designed for people who are panicking. Users reported a lost pet in under ninety seconds.</p></div></article>
+  </div>
+  <p id="status" role="status" class="lede" style="margin:14px 0 0;font-size:.85rem"></p>
+</div></section>
 
-        </div>
-        <div class="about-content">
-          <p>I’m a Master’s student in Human-Computer Interaction at Utrecht University with a background in computer science and a strong interest in user-centered design. I completed my bachelor’s degree in Computer Science with a minor in Business Administration at the University of Cyprus.
+<section id="about" class="thesis"><div class="wrap two">
+  <div>
+    <h2>About</h2>
+    <p>I started in Computer Science, so I am comfortable reading a codebase, writing Python and shipping a working product. My bachelor included software engineering and Internet Technologies courses, and I have worked as a test engineer in a Scrum team.</p>
+    <p>I moved into Human Computer Interaction because the harder question is usually not whether something can be built, but whether people will use it and why. I like teams where research, data and delivery sit close together.</p>
+  </div>
+  <div class="skills">
+    <div class="eng"><h3>Engineering</h3><div class="tags"><span>Java</span><span>C and C++</span><span>JavaScript</span><span>HTML and CSS</span><span>Python</span><span>SQL</span><span>Agile and Scrum</span><span>Test automation</span><span>Katalon Studio</span></div></div>
+    <div><h3>Data and AI</h3><div class="tags"><span>pandas</span><span>statsmodels</span><span>scikit-learn</span><span>OpenCV</span><span>Discrete choice models</span><span>Prolog</span></div></div>
+    <div><h3>Design and research</h3><div class="tags"><span>Figma</span><span>Prototyping</span><span>WCAG</span><span>Usability testing</span><span>Interviews</span><span>Thematic analysis</span><span>Qualtrics</span></div></div>
+  </div>
+</div></section>
 
-I’m drawn to the point where technology meets real human needs. My experience includes designing accessible learning tools and exploring how thoughtful design can make digital experiences more inclusive, intuitive, and meaningful. I enjoy combining a technical foundation with a human-focused approach to solve real-world problems.
+<section id="thesis"><div class="wrap">
+  <h2>Master thesis: worth the wait</h2>
+  <p class="lede">With Nederlandse Spoorwegen. How many minutes is one level less crowding worth to a passenger, and what changes the answer.</p>
+  <p style="max-width:68ch">I ran two focus groups, designed a discrete choice experiment around what passengers said, collected 9,108 choices from 759 people, modelled them in Python with generalised estimating equations and turned the result into rules a product team can build.</p>
+  <div class="num">
+    <div><b>10.3 min</b> <span>Willingness to wait when deciding on the platform (95% CI 9.2 to 11.5)</span></div>
+    <div><b>14.2 min</b> <span>The same trade off when deciding at home (95% CI 12.4 to 15.9)</span></div>
+    <div><b>41.3%</b> <span>Share of all choices where passengers waited instead of boarding</span></div>
+  </div>
+  <h3 style="font-size:1.05rem;margin-bottom:12px">Share who chose to wait, by extra waiting time</h3>
+  <div class="bars" role="img" aria-label="Share who chose to wait: 58.8 percent at 10 minutes, 46.2 at 15, 36.5 at 20, 23.7 at 30">
+    <div class="br"><span>10 min</span><i style="width:58.8%"></i><span>58.8%</span></div>
+    <div class="br"><span>15 min</span><i style="width:46.2%"></i><span>46.2%</span></div>
+    <div class="br"><span>20 min</span><i style="width:36.5%"></i><span>36.5%</span></div>
+    <div class="br"><span>30 min</span><i style="width:23.7%"></i><span>23.7%</span></div>
+  </div>
+  <p style="margin-top:22px"><a class="btn g" href="https://studenttheses.uu.nl/items/28509b88-c971-454e-b42f-cb1fce4faeba" target="_blank" rel="noopener">Read the full thesis</a></p>
+</div></section>
 
-At the heart of my work is a simple goal: to help shape technology that makes life better, not more complicated.</p>
-          <div class="about-skills">
-            <span class="skill">UX Design</span>
-    <span class="skill">UX Research</span>
-    <span class="skill">User Testing</span>
-    <span class="skill">Prototyping</span>
-    <span class="skill">Human-Computer Interaction</span>
-    <span class="skill">Accessibility</span>
-    <span class="skill">HTML/CSS</span>
-    <span class="skill">JavaScript</span>
-    <span class="skill">Interaction Design</span>
-    <span class="skill">User-Centered Design</span>
-    <span class="skill">Design Thinking</span>
-    <span class="skill">Business Strategy</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="experience" class="thesis"><div class="wrap">
+  <h2>Experience and education</h2>
+  <div class="tl">
+    <div class="ent"><time>Apr 2026 to Jun 2026</time><div><h3>Teaching Assistant</h3><em>Utrecht University, Interaction Technology Innovation</em><ul><li>Supported student teams through user research, prototyping and iteration on interactive systems</li><li>Gave feedback on method choice, design rationale and research ethics</li></ul></div></div>
+    <div class="ent"><time>Oct 2024 to Feb 2025</time><div><h3>Special Scientist Researcher</h3><em>SEIT Lab, University of Cyprus, DigiComPass Erasmus+</em><ul><li>Ran the Moodle platform for an EU funded digital skills course used across partner universities</li><li>Coordinated translation of all course material into six languages</li><li>Restructured navigation and interactive content so the course was easier to complete</li></ul></div></div>
+    <div class="ent"><time>May 2023 to Aug 2023</time><div><h3>Test Engineer, internship</h3><em>Bank of Cyprus, Nicosia</em><ul><li>Wrote test scripts for Internet Banking features inside an agile Scrum team</li><li>Built automated regression tests with Katalon Studio</li><li>Contributed to feature and interface design sessions for upcoming releases</li></ul></div></div>
+  </div>
+  <h3 class="sub2">Education</h3>
+  <div class="tl">
+    <div class="ent"><time>2024 to 2026</time><div><h3>MSc Human Computer Interaction</h3><em>Utrecht University</em><ul><li>Thesis with Nederlandse Spoorwegen</li><li>Student Ambassador, Programme Advisory Committee and Student Consultation Board member</li></ul></div></div>
+    <div class="ent"><time>2019 to 2024</time><div><h3>BSc Computer Science, minor in Business Administration</h3><em>University of Cyprus</em><ul><li>Courses in software engineering and Internet Technologies (web development)</li><li>Electives in artificial intelligence, logic programming, image processing and web data mining</li></ul></div></div>
+    <div class="ent"><time>2021 to 2023</time><div><h3>YUFE Student Journey</h3><em>YUFE Alliance</em><ul><li>Courses at partner universities across six countries</li></ul></div></div>
+  </div>
+</div></section>
 
-  <!-- Experience Section -->
-  <section id="experience">
-    <div class="container">
-      <div class="section-heading">
-        <h2>Work Experience</h2>
-      </div>
-      <div class="experience-item">
-        <div class="experience-date">10/2024 – 02/2025</div>
-        <div class="experience-content">
-          <h3>Special Scientist Researcher</h3>
-          <span class="experience-company">SEIT Lab, Nicosia - DigiComPass Erasmus+ Project</span>
-          <ul>
-            <li>Managed the Moodle-based online platform for an EU-funded digital skills course</li>
-            <li>Uploaded and organized interactive course content (incl. H5P)</li>
-            <li>Coordinated translations of all materials into six languages.</li>
-            <li>Collaborated with international partners.</li>
-            <li>Contributed to an engaging learning experience.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="experience-item">
-        <div class="experience-date">05/2023 – 08/2023</div>
-        <div class="experience-content">
-          <h3>Test Engineer</h3>
-          <span class="experience-company">Bank of Cyprus, Nicosia</span>
-          <ul>
-            <li>Designed user-focused testing for online banking features</li>
-            <li>Developed automated test scripts using Katalon</li>
-            <li>Contributed to UI/UX ideation for future-facing banking tools</li>
-          </ul>
-        </div>
-      </div>
-      <div class="experience-item">
-        <div class="experience-date">Seasonal</div>
-        <div class="experience-content">
-          <h3>Sales Assistant</h3>
-          <span class="experience-company">George N. Vakis Jewellery</span>
-          <p>Assisted customers with sales and provided support in a luxury retail setting.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Education Section -->
-  <section id="education">
-    <div class="container">
-      <div class="section-heading">
-        <h2>Education</h2>
-      </div>
-      <div class="education-item">
-        <div class="education-date">2024–Present</div>
-        <div class="education-content">
-          <h3>Master in Human-Computer Interaction</h3>
-          <span class="education-institution">Utrecht University</span>
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="education-date">2019–2024</div>
-        <div class="education-content">
-          <h3>BSc Computer Science, Minor in Business Administration</h3>
-          <span class="education-institution">University of Cyprus</span>
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="education-date">2021–2023</div>
-        <div class="education-content">
-          <h3>YUFE Student Journey</h3>
-          <span class="education-institution">Studied across Europe</span>
-          <p>Completed diverse courses at partner universities, including Music & Technology and Security & Intelligence Analysis (UC3M), Financial Risk Management (Antwerp), Human Rights and Technoscience (Torun), Tourism Studies (Eastern Finland), Code Optimization (Rijeka), and Narrative & Film (Essex).</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects">
-    <div class="container">
-      <div class="section-heading">
-        <h2>Some of My Work</h2>
-      </div>
-      <div class="projects-grid">
-        <div class="project-card" data-project="1">
-          <div class="project-image"></div>
-          <div class="project-content">
-            <h3 class="project-title">festify</h3>
-            <p class="project-description">A personalized music event discovery app with a clean, adaptable interface and thoughtful user onboarding. Designed to balance usability, customization, and trust.</p>
-            <div class="project-tags">
-              <span class="project-tag">Usability</span>
-              <span class="project-tag">Customization</span>
-              <span class="project-tag">Trust</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-card" data-project="2">
-          <div class="project-image"></div>
-          <div class="project-content">
-            <h3 class="project-title">WebWise: Accessible Web Design LMS</h3>
-            <p class="project-description">Built a learning management system to train developers on accessibility principles for people with visual impairments using interactive content.</p>
-            <div class="project-tags">
-              <span class="project-tag">E-learning</span>
-              <span class="project-tag">WCAG</span>
-               <span class="project-tag">Accessibility</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-card" data-project="3">
-          <div class="project-image"></div>
-          <div class="project-content">
-            <h3 class="project-title">Skoupa : Interactive Lamp for Meditation</h3>
-            <p class="project-description">An AI-powered meditation lamp that listens to your voice and suggests a personalized meditation based on your emotional state.</p>
-            <div class="project-tags">
-              <span class="project-tag">Tangible UI</span>
-              <span class="project-tag">Wellbeing</span>
-            </div>
-          </div>
-        </div>
-         <div class="project-card" data-project="4">
-          <div class="project-image"></div>
-          <div class="project-content">
-            <h3 class="project-title">Petopia: Social Network for Pet Lovers</h3>
-            <p class="project-description">Petopia is a social platform for pet lovers to share updates, report missing/found animals, and discover local shelters, using simple, familiar interactions.
-
-</p>
-            <div class="project-tags">
-              <span class="project-tag">Prototype</span>
-                 <span class="project-tag">UXDesign</span>
-              <span class="project-tag">SocialPlatform</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Project Modals -->
-  <!-- Project Modals -->
-<div class="modal" id="project-modal-1">
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    
-    <h2>Festify</h2>
-    <p class="project-intro">A personalized music event discovery app with a clean, adaptable interface and thoughtful user onboarding. Designed to balance usability, customization, and trust.</p>
-
-      <div class="modal-gallery">
-        <div class="modal-image">
-          <img src="Photos/Festify/1.png" alt="Project screenshot 1">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/2.png" alt="Project screenshot 2">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/3.png" alt="Project screenshot 3">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/4.png" alt="Project screenshot 4">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/5.png" alt="Project screenshot 5">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/6.png" alt="Project screenshot 6">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/7.png" alt="Project screenshot 7">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/8.png" alt="Project screenshot 8">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/9.png" alt="Project screenshot 9">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/10.png" alt="Project screenshot 10">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/11.png" alt="Project screenshot 11">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/12.png" alt="Project screenshot 12">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/13.png" alt="Project screenshot 13">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/14.png" alt="Project screenshot 14">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/15.png" alt="Project screenshot 15">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/16.png" alt="Project screenshot 16">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/17.png" alt="Project screenshot 17">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/18.png" alt="Project screenshot 18">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/19.png" alt="Project screenshot 19">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/20.png" alt="Project screenshot 20">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Festify/21.png" alt="Project screenshot 21">
-        </div>
-      </div>
-      
-       <div class="project-section">
-      <h3>Project Details</h3>
-      <p>Festify is a simple and friendly app to find music events that match your taste. Users can pick their favorite artists, genres, and event types during sign-up.</p>
-      
-      <div class="highlight-box">
-        <p>The interface uses light colors and includes a brightness option for comfort. The homepage shows a personal event list, with filters to find exactly what you're looking for.</p>
-      </div>
-    </div>
-    
-    <div class="project-section">
-      <h3>Key Features</h3>
-      <ul class="feature-list">
-        <li>
-          <strong>Personalized Onboarding</strong><br>
-          Quick sign-up with questions about age, location, music taste, and event types
-        </li>
-        <li>
-          <strong>Smart Discovery</strong><br>
-          Clean homepage with a personalized feed of music events
-        </li>
-        <li>
-          <strong>Advanced Filtering</strong><br>
-          Easy filters for genre, date, location, and ticket price
-        </li>
-        <li>
-          <strong>Comprehensive Navigation</strong><br>
-          Menu with access to bookmarks, settings, and Spotify linking
-        </li>
-        <li>
-          <strong>Detailed Event Cards</strong><br>
-          Event details with ticket links, and options to share or save
-        </li>
-        <li>
-          <strong>Feedback System</strong><br>
-          Rating system: like/dislike suggestions and 5-star event feedback
-        </li>
-      </ul>
+<section id="contact"><div class="wrap two">
+  <div>
+    <h2>Let us talk</h2>
+    <p class="lede" style="margin-bottom:0">I am looking for a first role as a software engineer, in a team that builds for real users. Send a message and I will reply within a day.</p>
+    <div class="ch">
+      <a href="mailto:nikolasvk@outlook.com">Email <span>nikolasvk@outlook.com</span></a>
+      <a href="https://www.linkedin.com/in/nikolas-vaki" target="_blank" rel="noopener">LinkedIn <span>linkedin.com/in/nikolas-vaki</span></a>
+      <a href="https://github.com/nklsvk" target="_blank" rel="noopener">GitHub <span>github.com/nklsvk</span></a>
     </div>
   </div>
-</div>
-
-<div class="modal" id="project-modal-2">
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    
-    <h2>WebWise Academy</h2>
-    <p class="project-intro">An educational platform that helps developers create websites that are more accessible for people with visual impairments, featuring structured courses and hands-on tools.</p>
-    
-    <div class="modal-gallery">
-      <div class="modal-image">
-        <img src="Photos/WebWiseLogo2.png" alt="WebWise Academy logo">
-      </div>
-      <div class="modal-video">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/mAABKbpL4Qc" title="WebWise Academy Demo" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    
-    <div class="project-section">
-      <h3>Project Details</h3>
-      <p>WebWise Academy includes three distinct courses to guide developers through visual accessibility:</p>
-      
-      <ul class="feature-list">
-        <li>
-          <strong>Understanding Visual Impairments</strong><br>
-          Introduction to common types of visual impairments
-        </li>
-        <li>
-          <strong>Accessible Standards and Guidelines</strong><br>
-          WCAG standards specifically for visually impaired users
-        </li>
-        <li>
-          <strong>Assistive Technologies and Tools</strong><br>
-          Tools like screen readers, magnifiers, alt-text, and more
-        </li>
-      </ul>
-    </div>
-    
-    <div class="project-section">
-      <h3>Key Features</h3>
-      <ul class="feature-list">
-        <li>Three focused courses on visual accessibility</li>
-        <li>Color blindness simulation and contrast checking tools</li>
-        <li>Visual Accessibility Toolkit</li>
-        <li>H5P Interactive content</li>
-        <li>OpenAI API integration for organization information</li>
-        <li>Progress tracking and completion certificates</li>
-      </ul>
-    </div>
+  <div>
+    <form id="form" action="https://formspree.io/f/mqabyvyo" method="POST" novalidate>
+      <div class="field"><label for="n">Your name</label><input id="n" name="name" autocomplete="name" required><p class="err" id="en" role="alert"></p></div>
+      <div class="field"><label for="e">Your email</label><input id="e" name="email" type="email" autocomplete="email" required><p class="err" id="ee" role="alert"></p></div>
+      <div class="field"><label for="m">Message</label><textarea id="m" name="message" placeholder="Which role, and what you are looking for" required></textarea><p class="err" id="em" role="alert"></p></div>
+      <button class="btn p" id="send" type="submit">Send message</button>
+    </form>
+    <div class="ok" id="ok" role="status"><h3 style="font-size:1.1rem;margin-bottom:6px">Message sent</h3><p>Thanks for getting in touch. I will reply to the address you gave.</p></div>
   </div>
-</div>
+</div></section>
+</main>
 
-  <div class="modal" id="project-modal-3">
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    
-    <h2>Skoupa: Lamp for Meditation</h2>
-    <p class="project-intro">An AI-powered meditation lamp that listens to your voice and suggests personalized meditations based on your emotional state.</p>
-    
-    <div class="modal-gallery">
-      <div class="modal-image">
-        <img src="Photos/skoupa11.jpg" alt="Skoupa lamp prototype">
-      </div>
-      <div class="modal-image">
-        <img src="Photos/skoupa22.jpg" alt="Skoupa in use">
-      </div>
-    </div>
-    
-    <div class="project-section">
-      <h3>Project Details</h3>
-      <p>"Skoupa" is an interactive meditation lamp designed to help students unwind before bed. The user speaks to the lamp, expressing how they feel, and the system uses AI-powered voice analysis to suggest matching meditation routines.</p>
-      
-      <div class="highlight-box">
-        <p>Developed in two iterations: Low-fidelity paper prototype for concept testing, and high-fidelity functional prototype with touch-sensors, light, and voice-triggered AI.</p>
-      </div>
-      
-      <h4>Team Members</h4>
-      <ul class="team-list">
-        <li>Nikolas V.</li>
-        <li>Susan R.</li>
-        <li>Akanksha P.R.</li>
-        <li>Ritesh K.</li>
-        <li>Shivani A.</li>
-        <li>Abdelghaffar A.</li>
-      </ul>
-    </div>
-    
-    <div class="project-section">
-      <h3>Key Features</h3>
-      <ul class="feature-list">
-        <li>Voice interaction with mood analysis</li>
-        <li>AI-generated meditation suggestions</li>
-        <li>Ambient lighting system</li>
-        <li>Dual prototype development</li>
-        <li>Designed specifically for pre-sleep stress relief</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<footer><div class="wrap"><span>© 2026 Nikolas Vaki</span><a href="#top">Back to top</a></div></footer>
 
-<div class="modal" id="project-modal-4">
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    
-    <h2>Petopia</h2>
-    <p class="project-intro">A mobile social networking app designed to help users connect around their love for animals, report lost or found pets, and access shelter information.</p>
-    
-      <div class="modal-gallery">
-        <div class="modal-image">
-          <img src="Photos/Petopia/petopia1.jpg" alt="Project screenshot 1">
-        </div>
-        <div class="modal-image">
-          <img src="Photos/Petopia/petopia2.jpg" alt="Project screenshot 1">        </div>
-        <div class="modal-image">
-           <img src="Photos/Petopia/petopia3.jpg" alt="Project screenshot 1">        </div>
+<script>
+(function(){
+  var root=document.documentElement,tb=document.getElementById("theme");
+  function get(){try{return localStorage.getItem("theme")}catch(e){return null}}
+  function set(v){try{localStorage.setItem("theme",v)}catch(e){}}
+  function apply(t){root.setAttribute("data-theme",t);var d=t==="dark";tb.setAttribute("aria-pressed",String(d));tb.setAttribute("aria-label",d?"Switch to light theme":"Switch to dark theme")}
+  apply(get()||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+  tb.onclick=function(){var n=root.getAttribute("data-theme")==="dark"?"light":"dark";apply(n);set(n)};
 
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia4.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia5.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia6.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia7.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia8.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia9.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia10.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia11.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia12.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia13.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia14.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia15.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia16.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia17.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia18.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia19.jpg" alt="Project screenshot 1">        </div>
-           <div class="modal-image">
-           <img src="Photos/Petopia/petopia20.jpg" alt="Project screenshot 1">        </div>
-          
-      </div>
-         
-      <div class="project-section">
-      <h3>Project Details</h3>
-      <p>Petopia is a conceptual mobile app prototype developed as part of a university HCI course. It serves as a social platform tailored for pet lovers with intuitive interactions inspired by popular social media patterns.</p>
-    </div>
-    
-    <div class="project-section">
-      <h3>Key Features</h3>
-      <ul class="feature-list">
-        <li>Custom posts and alerts for lost/found pets</li>
-        <li>Integrated messaging and chat interface</li>
-        <li>Forum section for topic-based discussions</li>
-        <li>Interactive maps and shelter listings</li>
-        <li>Personal user profiles with follow system</li>
-      </ul>
-    </div>
-    
-    <div class="project-section">
-      <h3>Design Highlights</h3>
-      <ul class="feature-list">
-        <li>User-friendly navigation with intuitive icons</li>
-        <li>Color-coded states and consistent layout</li>
-        <li>Responsive feedback through pop-ups</li>
-        <li>Comprehensive onboarding flows</li>
-      </ul>
-    </div>
-    
-    <div class="project-section">
-      <h3>Usability Goals</h3>
-      <ul class="feature-list">
-        <li>Easy learning curve for all users</li>
-        <li>Efficient task execution</li>
-        <li>Error prevention and recovery</li>
-        <li>Memorable interface patterns</li>
-        <li>High user satisfaction</li>
-      </ul>
-    </div>
-  </div>
-</div>
+  var fb=document.querySelectorAll(".filters button"),cards=document.querySelectorAll("#grid .card"),st=document.getElementById("status");
+  fb.forEach(function(b){b.onclick=function(){
+    var k=b.dataset.f,c=0;fb.forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});
+    cards.forEach(function(el){var m=k==="all"||el.dataset.t.split(" ").indexOf(k)>-1;el.hidden=!m;if(m)c++});
+    st.textContent=k==="all"?"":"Showing "+c+" project"+(c===1?"":"s")+" in "+b.textContent+".";
+  }});
 
-  <!-- Image Viewer -->
-<div class="image-viewer">
-  <div class="nav-arrows">
-    <div class="arrow prev-arrow">
-      <i class="fas fa-chevron-left"></i>
-    </div>
-    <div class="arrow next-arrow">
-      <i class="fas fa-chevron-right"></i>
-    </div>
-  </div>
-  <img class="expanded-image" src="" alt="Expanded project image">
-  <div class="close-viewer">
-    <i class="fas fa-times"></i>
-  </div>
-</div>
-  <!-- CV Modal
-  <div class="cv-modal">
-    <div class="cv-modal-content">
-      <button class="modal-close">&times;</button>
-      <h2>Curriculum Vitae</h2>
-      <div class="cv-viewer">
-        <div class="cv-page">
-          <h3>Nikolas Vaki</h3>
-          <p>UX Researcher & Designer | HCI Master's Student</p>
-          
-          <h4>Education</h4>
-          <ul>
-            <li>Master in Human-Computer Interaction - Utrecht University (2024-Present)</li>
-            <li>BSc Computer Science - University of Cyprus (2019-2023)</li>
-          </ul>
-          
-          <h4>Experience</h4>
-          <ul>
-            <li>Special Scientist Researcher - SEIT Lab (2024-2025)</li>
-            <li>Test Engineer - Bank of Cyprus (2023)</li>
-            <li>Sales Assistant - George N. Vakis Jewellery (Seasonal)</li>
-          </ul>
-          
-          <h4>Skills</h4>
-          <ul>
-            <li>User Research & Testing</li>
-            <li>Interaction Design</li>
-            <li>Prototyping (Figma, Adobe XD)</li>
-            <li>Front-end Development (HTML/CSS/JS)</li>
-            <li>Accessibility (WCAG)</li>
-          </ul>
-          
-          <h4>Projects</h4>
-          <ul>
-            <li>Haptic Navigation System</li>
-            <li>Accessible LMS Platform</li>
-            <li>Meditation Tangible Interface</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- CV Modal -->
-<!-- CV Modal -->
-<div class="cv-modal">
-  <div class="cv-modal-content">
-    <button class="modal-close">&times;</button>
-    <h2>Curriculum Vitae</h2>
-    
-    <div class="cv-viewer">
-      <div class="cv-page">
-        <h3>Nikolas Vaki</h3>
-        <p>UX Researcher & Designer | HCI Master's Student</p>
-
-        <!-- Experience -->
-        <h4>Experience</h4>
-        <ul>
-          <li>
-            <strong>Special Scientist Researcher</strong><br>
-            <em>SEIT Lab, University of Cyprus | Oct 2024 – Feb 2025</em>
-            <em>DigiComPass – Erasmus+ Project | Platform & Content Coordinator</em>
-            <ul>
-              <li>Managed Moodle-based platform for EU digital skills course</li>
-              <li>Uploaded/organized interactive H5P content</li>
-              <li>Coordinated translation of materials into six languages</li>
-              <li>Collaborated with international project partners</li>
-              <li>Enhanced learner engagement through UX-focused design</li>
-            </ul>
-          </li>
-
-          <li>
-            <strong>Test Engineer Intern</strong><br>
-            <em>Bank of Cyprus | May 2023 – Aug 2024</em>
-            <ul>
-              <li>Worked in an Agile Scrum team</li>
-              <li>Designed and executed test scripts for Internet Banking solutions</li>
-              <li>Automated testing with Katalon</li>
-              <li>Participated in UI/UX design processes and brainstorming</li>
-            </ul>
-          </li>
-
-          <li>
-            <strong>Sales Assistant</strong><br>
-            <em>George N. Vakis Jewellery | Seasonal</em>
-            <em>Ayia Napa, Cyprus</em>
-          </li>
-        </ul>
-
-        <!-- Education -->
-        <h4>Education</h4>
-        <ul>
-          <li>
-            <strong>Master in Human-Computer Interaction</strong><br>
-            <em>Utrecht University | 2024–Present</em>
-            <em>Utrecht, Netherlands</em>
-          </li>
-          <li>
-            <strong>BSc in Computer Science, Minor in Business Administration</strong><br>
-            <em>University of Cyprus | 2019–2023</em>
-            <em>Nicosia, Cyprus</em>
-          </li>
-          <li>
-            <strong>YUFE Student Journey</strong><br>
-            <em>YUFE Alliance | 2021–2023</em>
-            <ul>
-              <li>Universidad Carlos III de Madrid: Music & Technology, Security & Intelligence Analyst</li>
-              <li>University of Antwerp: Financial Risk Management</li>
-              <li>Nicolaus Copernicus University: Business and Human Rights, Risk Society</li>
-              <li>University of Eastern Finland: Tourism Studies & Destination Marketing</li>
-              <li>University of Rijeka: Code Optimization</li>
-              <li>University of Essex: Narrative and Film</li>
-            </ul>
-          </li>
-          <li>
-            <strong>ECDL Certification</strong><br>
-            <em>Cyprus Computer Society</em>
-          </li>
-        </ul>
-
-        <!-- Skills -->
-        <h4>Skills</h4>
-        <div class="skills-grid">
-          <ul>
-            <li><strong>UX/UI</strong></li>
-            <li>User Research</li>
-            <li>Interaction Design</li>
-            <li>Prototyping</li>
-            <li>Accessibility (WCAG)</li>
-          </ul>
-          <ul>
-            <li><strong>Technical</strong></li>
-            <li>HTML/CSS/JavaScript</li>
-            <li>Python</li>
-            <li>Java</li>
-            <li>C/C++</li>
-            <li>SQL</li>
-          </ul>
-          <ul>
-            <li><strong>Soft Skills</strong></li>
-            <li>Creativity</li>
-            <li>Communication</li>
-            <li>Teamwork</li>
-            <li>Attention to Detail</li>
-          </ul>
-        </div>
-
-        <!-- Rest of your sections... -->
-      </div>
-    </div>
-  </div>
-</div>
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="container">
-      <div class="section-heading">
-        <h2>Get In Touch</h2>
-      </div>
-      <div class="contact">
-        <div class="contact-info">
-          <div class="contact-method">
-            <div class="contact-icon">
-              <i class="fas fa-envelope"></i>
-            </div>
-            <div>
-              <h3>Email</h3>
-              <a href="mailto:nikolasvk@outlook.com">nikolasvk@outlook.com</a>
-            </div>
-          </div>
-          <div class="contact-method">
-            <div class="contact-icon">
-              <i class="fab fa-linkedin"></i>
-            </div>
-            <div>
-              <h3>LinkedIn</h3>
-              <a href="https://www.linkedin.com/in/nikolas-vaki" target="_blank">linkedin.com/in/nikolas-vaki</a>
-            </div>
-          </div>
-        </div>
-       <form class="contact-form" action="https://formspree.io/f/mqabyvyo" method="POST">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Your name" required>
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Your email" required>
-  </div>
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" name="message" placeholder="Your message" required></textarea>
-  </div>
-  <button type="submit" class="submit-btn">
-    <i class="fas fa-paper-plane"></i> Send Message
-  </button>
-</form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-socials">
-        <a href="https://www.linkedin.com/in/nikolas-vaki" class="footer-social" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <!-- <a href="https://github.com/yourusername" class="footer-social" target="_blank" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://dribbble.com/yourusername" class="footer-social" target="_blank" aria-label="Dribbble">
-          <i class="fab fa-dribbble"></i>
-        </a> -->
-      </div>
-      <p class="footer-copyright">© 2025 Nikolas Vaki. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Back to top button -->
-  <div class="back-to-top">
-    <i class="fas fa-arrow-up"></i>
-  </div>
-
-  <script>
-    // Navigation active state
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
-      
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-      
-      // Back to top button
-      if (window.pageYOffset > 300) {
-        document.querySelector('.back-to-top').classList.add('visible');
-      } else {
-        document.querySelector('.back-to-top').classList.remove('visible');
-      }
-    });
-
-    // Smooth scrolling for navigation
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        const targetId = link.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        window.scrollTo({
-          top: targetElement.offsetTop - 100,
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    // Back to top button
-    document.querySelector('.back-to-top').addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // Form submission
-const contactForm = document.querySelector('.contact-form');
-const successMessage = document.createElement('div');
-successMessage.className = 'form-success';
-successMessage.style.display = 'none';
-successMessage.innerHTML = `
-  <i class="fas fa-check-circle"></i>
-  <p>Thank you! Your message has been sent successfully.</p>
-`;
-contactForm.parentNode.insertBefore(successMessage, contactForm.nextSibling);
-
-contactForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const submitBtn = this.querySelector('button[type="submit"]');
-  const originalBtnText = submitBtn.innerHTML;
-  
-  // Show loading state
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-  
-  // Simulate sending (replace with actual EmailJS/Formspree code)
-  setTimeout(() => {
-    // On success
-    this.style.display = 'none';
-    successMessage.style.display = 'block';
-    this.reset();
-    
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      successMessage.style.display = 'none';
-      this.style.display = 'block';
-    }, 5000);
-    
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnText;
-  }, 1500);
-});
-    // Project modals
-    const projectCards = document.querySelectorAll('.project-card');
-    const modals = document.querySelectorAll('.modal');
-    const closeButtons = document.querySelectorAll('.modal-close');
-
-    projectCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const projectId = card.getAttribute('data-project');
-        const modal = document.getElementById(`project-modal-${projectId}`);
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    // CV Modal
-    const cvBtn = document.querySelector('.cv-btn');
-    const cvModal = document.querySelector('.cv-modal');
-    const cvCloseBtn = cvModal.querySelector('.modal-close');
-
-    cvBtn.addEventListener('click', () => {
-      cvModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-
-    cvCloseBtn.addEventListener('click', () => {
-      cvModal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    cvModal.addEventListener('click', (e) => {
-      if (e.target === cvModal) {
-        cvModal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Close all modals
-    closeButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const modal = button.closest('.modal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
-
-    modals.forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      });
-    });
-
-    // Close modal with ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        modals.forEach(modal => {
-          if (modal.classList.contains('active')) {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-          }
-        });
-        
-        if (cvModal.classList.contains('active')) {
-          cvModal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      }
-    });
-    // Image viewer functionality
-const modalImages = document.querySelectorAll('.modal-image img');
-const imageViewer = document.querySelector('.image-viewer');
-const expandedImg = document.querySelector('.expanded-image');
-const closeViewer = document.querySelector('.close-viewer');
-const prevArrow = document.querySelector('.prev-arrow');
-const nextArrow = document.querySelector('.next-arrow');
-
-let currentImageIndex = 0;
-let currentProjectImages = [];
-
-// Open image viewer
-modalImages.forEach((img, index) => {
-  img.addEventListener('click', (e) => {
-    // Get all images from current project modal
-    const modal = img.closest('.modal');
-    currentProjectImages = Array.from(modal.querySelectorAll('.modal-image img'));
-    currentImageIndex = currentProjectImages.findIndex(i => i === img);
-    
-    // Set and show the clicked image
-    expandedImg.src = img.src;
-    imageViewer.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  var f=document.getElementById("form"),ok=document.getElementById("ok"),sb=document.getElementById("send");
+  var rules=[["n","en",function(v){return v.trim().length>1},"Enter your name."],["e","ee",function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())},"Enter an email address I can reply to."],["m","em",function(v){return v.trim().length>4},"Add a short message."]];
+  f.addEventListener("submit",function(ev){
+    ev.preventDefault();var good=true,first=null;
+    rules.forEach(function(r){var i=document.getElementById(r[0]),o=document.getElementById(r[1]);
+      if(r[2](i.value)){o.textContent="";i.removeAttribute("aria-invalid")}else{o.textContent=r[3];i.setAttribute("aria-invalid","true");good=false;if(!first)first=i}});
+    if(!good){first.focus();return}
+    var lab=sb.textContent;sb.disabled=true;sb.textContent="Sending";
+    fetch(f.action,{method:"POST",body:new FormData(f),headers:{Accept:"application/json"}}).then(function(r){
+      if(!r.ok)throw 0;f.style.display="none";ok.style.display="block";f.reset()
+    }).catch(function(){document.getElementById("em").textContent="The message did not send. Email nikolasvk@outlook.com instead.";sb.disabled=false;sb.textContent=lab});
   });
-});
-
-// Navigation arrows
-prevArrow.addEventListener('click', () => {
-  currentImageIndex = (currentImageIndex - 1 + currentProjectImages.length) % currentProjectImages.length;
-  expandedImg.src = currentProjectImages[currentImageIndex].src;
-});
-
-nextArrow.addEventListener('click', () => {
-  currentImageIndex = (currentImageIndex + 1) % currentProjectImages.length;
-  expandedImg.src = currentProjectImages[currentImageIndex].src;
-});
-
-// Close viewer
-closeViewer.addEventListener('click', () => {
-  imageViewer.classList.remove('active');
-  document.body.style.overflow = '';
-});
-
-// Close with ESC key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && imageViewer.classList.contains('active')) {
-    imageViewer.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  
-  // Arrow key navigation
-  if (imageViewer.classList.contains('active')) {
-    if (e.key === 'ArrowLeft') {
-      prevArrow.click();
-    } else if (e.key === 'ArrowRight') {
-      nextArrow.click();
-    }
-  }
-});
-
-    // Animate elements when they come into view
-    const animateOnScroll = () => {
-      const elements = document.querySelectorAll('.experience-item, .education-item, .project-card, .contact-method');
-      
-      elements.forEach(element => {
-        const elementPosition = element.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.2;
-        
-        if (elementPosition < screenPosition) {
-          element.style.opacity = '1';
-          element.style.transform = 'translateY(0)';
-        }
-      });
-    };
-
-    // Set initial styles for animation
-    document.querySelectorAll('.experience-item, .education-item, .project-card, .contact-method').forEach(element => {
-      element.style.opacity = '0';
-      element.style.transform = 'translateY(30px)';
-      element.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-    });
-
-    window.addEventListener('scroll', animateOnScroll);
-    window.addEventListener('load', animateOnScroll);
-  </script>
+})();
+</script>
 </body>
 </html>
